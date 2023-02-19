@@ -9,7 +9,7 @@ Net 7.0
 
 - **Installing**
 Create a folder named OrdersFiles on your relative path <bin\Debug\net7.0>
-Added Orders.jso file into this folder
+Add Orders.json file into this folder
 
 - **Executing program**
 Run with no interactions
