@@ -1,18 +1,24 @@
-﻿using Newtonsoft.Json;
-using SpeedAir.DTOs;
+﻿using SpeedAir.DTOs;
 using SpeedAir.Extensions;
+using SpeedAir.Repositories;
 
 namespace SpeedAir.Services
 {
-    public static class ScheduleOrdersService
+    public class ScheduleOrdersService : IScheduleOrdersService
     {
-        public static void ScheduleOrders(IList<ScheduledFlightsDTO> scheduledFlights)
+        private readonly IOrdersRepository ordersRepository;
+
+        public ScheduleOrdersService(IOrdersRepository ordersRepository)
         {
-            var orders = ReadQueueOrders();
-            if (orders == null)
+            this.ordersRepository = ordersRepository;
+        }
+
+        public void ScheduleOrders(IList<ScheduledFlightsDTO> scheduledFlights)
+        {
+            var orders = ordersRepository.GetQueueOrders();
+            if (orders == null || !scheduledFlights.Any())
             {
-                Console.WriteLine("No orders in the queue...");
-                return;
+                throw new Exception(SpeedWrite.NoOrdersFounded);
             }
 
             foreach (var order in orders)
@@ -26,13 +32,6 @@ namespace SpeedAir.Services
                 else
                     SpeedWrite.WriteOrder(order.Key);
             }
-        }
-
-        private static Dictionary<string, OrdersJsonDTO>? ReadQueueOrders()
-        {
-            var jsonFile = File.ReadAllText(@"OrdersFiles\Orders.json");
-            var orders = JsonConvert.DeserializeObject<Dictionary<string, OrdersJsonDTO>>(jsonFile);
-            return orders;
         }
     }
 }

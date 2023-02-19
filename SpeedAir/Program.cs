@@ -1,4 +1,7 @@
-﻿using SpeedAir.Services;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using SpeedAir.Repositories;
+using SpeedAir.Services;
 
 namespace SpeedAir
 {
@@ -6,11 +9,19 @@ namespace SpeedAir
     {
         static void Main(string[] args)
         {
-            ScheduleDatesService.ScheduleDates(new List<DateTime>
-            {
-                new DateTime(2023, 02, 01), 
-                new DateTime(2023, 02, 02) 
-            });
+            using IHost host = Host.CreateDefaultBuilder(args)
+                .ConfigureServices(services =>
+                {
+                    services.AddSingleton<IFlightsRepository, FlightsRepository>();
+                    services.AddSingleton<IOrdersRepository, OrdersRepository>();
+                    services.AddSingleton<IApplicationService, ApplicationService>();
+                    services.AddSingleton<IScheduleDatesService, ScheduleDatesService>();
+                    services.AddSingleton<IScheduleOrdersService, ScheduleOrdersService>();
+                })
+                .Build();
+
+            var app = host.Services.GetRequiredService<IApplicationService>();
+            app.Run();
         }
     }
 }

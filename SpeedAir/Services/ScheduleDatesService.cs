@@ -4,15 +4,22 @@ using SpeedAir.Repositories;
 
 namespace SpeedAir.Services
 {
-    public static class ScheduleDatesService
+    public class ScheduleDatesService : IScheduleDatesService
     {
-        public static void ScheduleDates(List<DateTime> scheduledDays)
+        private readonly IFlightsRepository flightsRepository;
+
+        public ScheduleDatesService(IFlightsRepository flightsRepository)
         {
-            var flights = FlightsRepository.GetAllFlights();
-            if (flights == null)
+            this.flightsRepository = flightsRepository;
+        }
+
+        public List<ScheduledFlightsDTO> ScheduleDates(List<DateTime> scheduledDays)
+        {
+            var flights = flightsRepository.GetAllFlights();
+            if (!flights.Any() || !scheduledDays.Any())
             {
                 SpeedWrite.WriteFlight();
-                return;
+                throw new Exception(SpeedWrite.NoFlightsFounded);
             }
 
             var flightNumber = 1;
@@ -26,7 +33,7 @@ namespace SpeedAir.Services
                     flightNumber++;
                 }
             }
-            ScheduleOrdersService.ScheduleOrders(scheduledFlights);
+            return scheduledFlights;
         }
     }
 }

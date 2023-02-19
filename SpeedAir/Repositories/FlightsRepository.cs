@@ -2,18 +2,18 @@
 
 namespace SpeedAir.Repositories
 {
-    public static class FlightsRepository
+    public class FlightsRepository : IFlightsRepository
     {
-        public static List<FlightsDTO> GetAllFlights() => new()
+        public List<FlightsDTO> GetAllFlights() => new()
         {
             new FlightsDTO(1, "Montreal (YUL) to Toronto (YYZ)", GetYULAirport(), GetYYZAirport()),
             new FlightsDTO(2, "Montreal (YUL) to Calgary (YYC)", GetYULAirport(), GetYYCAirport()),
             new FlightsDTO(3, "Montreal (YUL) to Vancouver (YVR)", GetYULAirport(), GetYVRAirport()),
         };
 
-        private static AirportDTO GetYULAirport() => new(1, "YUL", "Montreal airport");
-        private static AirportDTO GetYYZAirport() => new(1, "YYZ", "Toronto airport");
-        private static AirportDTO GetYYCAirport() => new(1, "YYC", "Calgari airport");
-        private static AirportDTO GetYVRAirport() => new(1, "YVR", "Vancouver airport");
+        private AirportDTO GetYULAirport() => new("YUL", "Montreal airport");
+        private AirportDTO GetYYZAirport() => new("YYZ", "Toronto airport");
+        private AirportDTO GetYYCAirport() => new("YYC", "Calgari airport");
+        private AirportDTO GetYVRAirport() => new("YVR", "Vancouver airport");
     }
 }
