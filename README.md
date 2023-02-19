@@ -6,13 +6,15 @@ A Console Application for a interview test
 
 Getting Started
 
-Dependencies
+- Dependencies
 Net 7.0
 
-Installing
-Download or clone the project
+- Installing
+Create a folder named OrdersFiles on your relative path <bin\Debug\net7.0>
+Added Orders.jso file into this folder
 
-Executing program
+- Executing program
+Run with no interactions
 
 
 Author
