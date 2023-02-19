@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using SpeedAir.DTOs;
+using SpeedAir.Extensions;
 
 namespace SpeedAir.Services
 {
@@ -7,8 +8,7 @@ namespace SpeedAir.Services
     {
         public static void ScheduleOrders(IList<ScheduledFlightsDTO> scheduledFlights)
         {
-            var jsonFile = File.ReadAllText(@"OrdersFiles\Orders.json");
-            var orders = JsonConvert.DeserializeObject<Dictionary<string, OrdersJsonDTO>>(jsonFile);
+            var orders = ReadQueueOrders();
             if (orders == null)
             {
                 Console.WriteLine("No orders in the queue...");
@@ -17,17 +17,22 @@ namespace SpeedAir.Services
 
             foreach (var order in orders)
             {
-                var itinerary = scheduledFlights.FirstOrDefault(w => w.Destination == order.Value.Destination && w.Box < w._maxBoxes);
+                var itinerary = scheduledFlights.FirstOrDefault(w => w.Destination.Code == order.Value.Destination && w.Box < w._maxBoxes);
                 if (itinerary != null)
                 {
                     itinerary.AddOneOrder();
-                    Console.WriteLine($"Order: {order.Key}, FlightNumber: {itinerary.Flight}, Departure: {itinerary.Departure}, Arrival: {itinerary.Destination}, Day: {itinerary.Day}");
+                    SpeedWrite.WriteOrder(order.Key, itinerary);
                 }
                 else
-                {
-                    Console.WriteLine($"Order: {order.Key}, FlightNumber: not scheduled");
-                }
+                    SpeedWrite.WriteOrder(order.Key);
             }
+        }
+
+        private static Dictionary<string, OrdersJsonDTO>? ReadQueueOrders()
+        {
+            var jsonFile = File.ReadAllText(@"OrdersFiles\Orders.json");
+            var orders = JsonConvert.DeserializeObject<Dictionary<string, OrdersJsonDTO>>(jsonFile);
+            return orders;
         }
     }
 }

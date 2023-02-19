@@ -5,7 +5,7 @@
         public int _maxBoxes = 20;
         private int _box = 0;
 
-        public ScheduledFlightsDTO(int flight, string departure, string destination, int day)
+        public ScheduledFlightsDTO(int flight, AirportDTO departure, AirportDTO destination, int day)
         {
             Flight = flight;
             Departure = departure;
@@ -14,8 +14,8 @@
         }
 
         public int Flight { get; set; }
-        public string Departure { get; set; } = string.Empty;
-        public string Destination { get; set; } = string.Empty;
+        public AirportDTO Departure { get; set; } 
+        public AirportDTO Destination { get; set; }
         public int Day { get; set; }
         public int Box
         {
