@@ -1,6 +1,6 @@
 Project **SpeedAir**
 
-A Console Application for a interview test
+A Console Application for a company that aims to provide efficient and fast air freight services; Scheduling flights and orders.
 
 Getting Started
 
