@@ -1,24 +1,21 @@
-Project Title
-SpeedAir
+Project **SpeedAir**
 
-Description
 A Console Application for a interview test
 
 Getting Started
 
-- Dependencies
+- **Dependencies**
 Net 7.0
 
-- Installing
+- **Installing**
 Create a folder named OrdersFiles on your relative path <bin\Debug\net7.0>
 Added Orders.jso file into this folder
 
-- Executing program
+- **Executing program**
 Run with no interactions
 
 
-Author
+- **Author**
 Elizangela Calegari
 
-Version History
-1.0
+- **Version** 1.0
