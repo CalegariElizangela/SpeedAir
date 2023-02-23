@@ -4,8 +4,8 @@ namespace SpeedAir.Extensions
 {
     public class SpeedWrite
     {
-        public const string NoFlightsFounded = "No flights founded";
-        public const string NoOrdersFounded = "No orders founded in the queue";
+        public const string NoFlightsFounded = "No flights founded...";
+        public const string NoOrdersFounded = "No orders founded in the queue...";
 
         public static void WriteFlight(int? flightNumber = null, int? day = null, FlightsDTO? flight = null)
         {
